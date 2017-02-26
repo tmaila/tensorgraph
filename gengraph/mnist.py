@@ -76,7 +76,7 @@ with tf.Session() as sess:
     # Save checkpoint, graph.pb and tensorboard
     saver.save(sess, "models/model.ckpt")
     tf.train.write_graph(sess.graph.as_graph_def(), "models/", "graph.pb")
-    tf.train.SummaryWriter("board", sess.graph)
+    tf.summary.FileWriter("board", sess.graph)
     print("ckpt model save in the file : models/model.ckpt")
     print("graph model save in the file : models/graph.pb")
     print("board model save in the directory : board/")
@@ -85,10 +85,9 @@ with tf.Session() as sess:
     correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
     print(
-        "accuracy : ",    
+        "accuracy : ",
         sess.run(
             accuracy,
             feed_dict={x: mnist.test.images, y_:mnist.test.labels}
         )
      )
-
